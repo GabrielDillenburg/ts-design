@@ -1,6 +1,6 @@
 import { CsvFileReader } from './CsvFileReader'
-import { MatchResult } from './MatchResult'
-import { dateStringToDate } from './utils'
+import { MatchResult } from '../protocols/MatchResult'
+import { dateStringToDate } from '../utils'
 
 // type alias ts tuples
 type MatchData = [
