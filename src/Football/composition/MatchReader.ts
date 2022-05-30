@@ -1,17 +1,6 @@
 import { MatchResult } from '../protocols/MatchResult'
 import { dateStringToDate } from '../utils'
-
-// type alias ts tuples
-type MatchData = [
-  Date,
-  string,
-  string,
-  number,
-  number,
-  MatchResult,
-  string
-]
-
+import { MatchData } from '../protocols/MatchData'
 interface DataReader {
   read: () => void
   data: string [][]
