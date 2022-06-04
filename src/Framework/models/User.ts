@@ -47,4 +47,14 @@ export class User {
       this.set((await res).data)
     })
   }
+
+  async save (): Promise<void> {
+    void this.sync.save(this.attributes.getall())
+      .then(async (res: Promise<AxiosResponse>): Promise<void> => {
+        this.trigger('save')
+      })
+      .catch(() => {
+        this.trigger('error')
+      })
+  }
 }
