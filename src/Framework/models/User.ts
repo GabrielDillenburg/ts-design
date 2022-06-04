@@ -1,5 +1,7 @@
+import axios, { AxiosResponse } from 'axios'
 
 interface UserProps {
+  id?: number
   name?: string
   age?: number
 }
@@ -28,8 +30,31 @@ export class User {
   trigger (eventName: string): void {
     const handlers = this.events[eventName]
     if (!handlers || handlers.length === 0) {
-      void 
+      void console.warn(`No handlers for event ${eventName}`)
     }
+
     handlers.forEach(callback => callback())
+  }
+
+  fetch (): void {
+    void axios.get(`http://localhost:3000/users/${this.get('id')}`)
+      .then((response: AxiosResponse): void => {
+        this.set(response.data)
+      })
+  }
+
+  save (): void {
+    const id = this.get('id')
+    if (!id) {
+      void axios.post('http://localhost:3000/users', this.data)
+        .then((response: AxiosResponse): void => {
+          this.set(response.data)
+        })
+    } else {
+      void axios.put(`http://localhost:3000/users/${id}`, this.data)
+        .then((response: AxiosResponse): void => {
+          this.set(response.data)
+        })
+    }
   }
 }
