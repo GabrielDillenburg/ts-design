@@ -2,7 +2,8 @@
 export class Attributes <T> {
   constructor (private readonly data: T) {}
 
-  get<K extends keyof T> (key: K): T[K] {
+  // arrow function in this case because of "this" keyword context when the function is called
+  get = <K extends keyof T> (key: K): T[K] => {
     return this.data[key]
   }
 
