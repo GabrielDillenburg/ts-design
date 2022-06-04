@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios'
 import { Attributes } from './Attibutes'
 import { Eventing } from './Eventing'
 import { Sync } from './Sync'
@@ -33,5 +34,17 @@ export class User {
   set (update: UserProps): void {
     this.attributes.set(update)
     this.events.trigger('change')
+  }
+
+  async fetch (): Promise<void> {
+    const id = this.get('id')
+
+    if (typeof id !== 'number') {
+      throw new Error('Cannot fetch user without an id')
+    }
+
+    await this.sync.fetch(id).then(async (res: Promise<AxiosResponse>): Promise<void> => {
+      this.set((await res).data)
+    })
   }
 }
