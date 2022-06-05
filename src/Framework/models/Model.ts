@@ -22,22 +22,14 @@ interface HasId {
 
 export class Model<T extends HasId> {
   constructor (
-    public attributes: ModelAttributes<T>,
-    public events: Events,
-    public sync: Sync<T>
+    private readonly attributes: ModelAttributes<T>,
+    private readonly events: Events,
+    private readonly sync: Sync<T>
   ) {}
 
-  get on (): any {
-    return this.events.on
-  }
-
-  get trigger (): any {
-    return this.events.trigger
-  }
-
-  get get (): any {
-    return this.attributes.get
-  }
+  on = this.events.on
+  trigger = this.events.trigger
+  get = this.attributes.get
 
   set (update: T): void {
     this.attributes.set(update)
